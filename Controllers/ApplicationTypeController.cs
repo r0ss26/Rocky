@@ -74,7 +74,29 @@ namespace Rocky.Controllers
         // GET - DELETE
         public IActionResult Delete(int? id)
         {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.ApplicationType.Find(id);
+            return View(obj);
+        }
 
+        // POST - DELETE
+        [HttpPost]
+        public IActionResult DeletePost(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var obj = _db.ApplicationType.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.ApplicationType.Remove(obj);
+            return RedirectToAction("Index");
         }
     }
 }
